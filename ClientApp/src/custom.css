@@ -1,0 +1,31 @@
+/* Provide sufficient contrast against white background */
+a {
+  color: #0366d6;
+}
+
+code {
+  color: #E01A76;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.btn-remove {
+  font-size: 12px;
+}
+
+.save-icon {
+  cursor: pointer;
+}
+
+.save-icon:hover {
+  color: #30a5ff !important;
+}
+
+#message {
+  min-height: 25px;
+  color: green;
+}
