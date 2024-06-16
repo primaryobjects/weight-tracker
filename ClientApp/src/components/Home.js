@@ -15,6 +15,7 @@ export const Entries = () => {
   const [description, setDescription] = useState('');
   const [analysis, setAnalysis] = useState('');
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [prompt, setPrompt] = useState('');
 
   useEffect(() => {
     const populateData = async () => {
@@ -129,7 +130,7 @@ export const Entries = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(entries),
+        body: JSON.stringify({prompt}),
       });
 
       if (response.ok) {
@@ -145,6 +146,10 @@ export const Entries = () => {
     finally {
       setIsAnalyzing(false);
     }
+  }
+
+  const onChangePrompt = e => {
+    setPrompt(e.target.value);
   }
 
   const renderTable = () => {
@@ -194,7 +199,7 @@ export const Entries = () => {
     { renderTable(entries) }
     <div>
       <div id='prompt-container'>
-        <input id="txtPrompt" type="text" placeholder="Optional custom prompt" title="Example: Make healthy eating recommendations for my diet." />
+        <input id="txtPrompt" type="text" placeholder="Optional custom prompt" title="Example: Make healthy eating recommendations for my diet." value={prompt} onChange={onChangePrompt} />
       </div>
       <div id='btnAnalyze' title='Analyze the weight trend using AI.' className={isAnalyzing ? 'disabled' : ''}>
         <FontAwesomeIcon icon={faWandMagicSparkles} onClick={onAnalyze} />

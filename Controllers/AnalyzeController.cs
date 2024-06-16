@@ -8,6 +8,11 @@ using weight_tracker.Types;
 
 namespace weight_tracker.Controllers
 {
+    public class AnalyzeModel
+    {
+        public required string Prompt { get; set; }
+    }
+
     [ApiController]
     [Route("api/analyze")]
     public class AnalyzeController(WeightAnalysis analyzer) : ControllerBase
@@ -15,17 +20,10 @@ namespace weight_tracker.Controllers
         private readonly WeightAnalysis _analyzer = analyzer;
 
         [HttpPost()]
-        public IActionResult Analyze(List<Weight> weights)
+        public IActionResult Analyze(AnalyzeModel model)
         {
-            if (ModelState.IsValid)
-            {
-                var result = _analyzer.Analyze(weights);
-                return new JsonResult(result);
-            }
-            else
-            {
-                return BadRequest(ModelState);
-            }
+            var result = _analyzer.Analyze(WeightManager.Load(), model.Prompt);
+            return new JsonResult(result);
         }
     }
 }
