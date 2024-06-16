@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
+import { faFloppyDisk, faWandMagicSparkles } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ReactDeleteRow from 'react-delete-row';
 import Fader from 'react-fader';
@@ -13,6 +13,8 @@ export const Entries = () => {
   const [entryDate, setEntryDate] = useState(new Date());
   const [weight, setWeight] = useState(150);
   const [description, setDescription] = useState('');
+  const [analysis, setAnalysis] = useState('');
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
 
   useEffect(() => {
     const populateData = async () => {
@@ -113,6 +115,38 @@ export const Entries = () => {
     }
   }
 
+  const onAnalyze = async () => {
+    if (isAnalyzing) {
+      return;
+    }
+
+    setAnalysis();
+    setIsAnalyzing(true);
+
+    try {
+      const response = await fetch(`/api/analyze`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(entries),
+      });
+
+      if (response.ok) {
+        setAnalysis(await response.json());
+      }
+      else {
+        throw new Error('Error calling api. ' + response);
+      }
+    }
+    catch (error) {
+      console.error('Error: ', error);
+    }
+    finally {
+      setIsAnalyzing(false);
+    }
+  }
+
   const renderTable = () => {
     const sortedEntries = entries.sort((a, b) => new Date(a.entryDate) - new Date(b.entryDate));
 
@@ -158,6 +192,20 @@ export const Entries = () => {
       <p id="message">{message}</p>
     </Fader>
     { renderTable(entries) }
+    <div>
+      <div id='prompt-container'>
+        <input id="txtPrompt" type="text" placeholder="Optional custom prompt" title="Example: Make healthy eating recommendations for my diet." />
+      </div>
+      <div id='btnAnalyze' title='Analyze the weight trend using AI.' className={isAnalyzing ? 'disabled' : ''}>
+        <FontAwesomeIcon icon={faWandMagicSparkles} onClick={onAnalyze} />
+      </div>
+    </div>
+    <div id='analysis'>
+      {isAnalyzing && <div className='spinner'></div>}
+      <Fader>
+        {analysis}
+      </Fader>
+    </div>
     <NewEntry entryDate={entryDate} setEntryDate={setEntryDate} weight={weight} setWeight={setWeight} description={description} setDescription={setDescription} onSave={onSave} />
   </div>
   );

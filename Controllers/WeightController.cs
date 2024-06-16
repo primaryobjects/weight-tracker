@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using weight_tracker.Managers;
 using weight_tracker.Types;
@@ -10,7 +6,7 @@ namespace weight_tracker.Controllers
 {
     [ApiController]
     [Route("api/weights")]
-    public class WeightController : ControllerBase
+    public class WeightController() : ControllerBase
     {
         [HttpGet()]
         public IActionResult GetWeights()

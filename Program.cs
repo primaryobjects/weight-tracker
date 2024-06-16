@@ -1,10 +1,16 @@
 using DotNetEnv;
+using weight_tracker.Managers.Interface;
+using weight_tracker.Managers;
+using weight_tracker.Managers.Concrete;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+builder.Services.AddSingleton<LLM, CohereManager>()
+    .AddSingleton<WeightAnalysis>();
 
 var app = builder.Build();
 
