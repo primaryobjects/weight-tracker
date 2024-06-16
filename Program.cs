@@ -6,13 +6,32 @@ using weight_tracker.Managers.Concrete;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
 
 builder.Services.AddSingleton<LLM, CohereManager>()
     .AddSingleton<WeightAnalysis>();
 
+// Configure cross http/https when publishing for deployment.
+string? Cors = Environment.GetEnvironmentVariable("CORS");
+bool isCors = Cors == "TRUE";
+if (isCors)
+{
+    builder.Services.AddCors(options =>
+    {
+        options.AddPolicy("AllowSpecificOrigin",
+            builder => builder.WithOrigins("https://localhost:44421")
+                                .AllowAnyHeader()
+                                .AllowAnyMethod());
+    });
+}
+
 var app = builder.Build();
+
+// Allow cross http/https when publishing for deployment.
+if (isCors)
+{
+    app.UseCors("AllowSpecificOrigin");
+}
 
 Env.Load();
 
