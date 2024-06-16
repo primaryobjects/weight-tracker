@@ -13,6 +13,26 @@
             ],
             "url": "c:\\Users\\kory\\.vscode\\extensions\\ms-edgedevtools.vscode-edge-devtools-2.1.5\\out\\startpage\\index.html",
             "preLaunchTask": "dotnet run"
+        },
+        {
+            "name": "Publish",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-and-publish",
+            "program": "${workspaceFolder}/bin/Debug/net8.0/weight-tracker.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
         }
     ]
 }
