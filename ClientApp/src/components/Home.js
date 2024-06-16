@@ -5,6 +5,7 @@ import ReactDeleteRow from 'react-delete-row';
 import Fader from 'react-fader';
 import { EditableCell } from './EditableCell';
 import { NewEntry } from './NewEntry';
+import { Chart } from './Chart';
 
 export const Entries = () => {
   const [entries, setEntries] = useState([]);
@@ -196,6 +197,7 @@ export const Entries = () => {
     <Fader>
       <p id="message">{message}</p>
     </Fader>
+    <Chart data={entries} />
     { renderTable(entries) }
     <div>
       <div id='prompt-container'>

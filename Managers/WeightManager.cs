@@ -28,6 +28,7 @@ namespace weight_tracker.Managers
             {
                 existingWeight.EntryDate = weight.EntryDate;
                 existingWeight.Description = weight.Description;
+                existingWeight.Value = weight.Value;
                 result = existingWeight;
             }
             else

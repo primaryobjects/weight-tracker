@@ -32,7 +32,7 @@ export const NewEntry = ({ entryDate, setEntryDate, weight, setWeight, descripti
         <label htmlFor='txtWeight'>Weight</label>
       </div>
       <div>
-        <input type='number' id='txtWeight' value={weight} required onChange={onWeightChange}></input>
+        <input type='decimal' id='txtWeight' value={weight} required onChange={onWeightChange}></input>
       </div>
       <div>
         <label htmlFor='txtDescription'>Notes</label>
