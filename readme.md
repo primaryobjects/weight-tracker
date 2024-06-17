@@ -41,6 +41,23 @@ Example 1: "Give the analysis in a fairy tale story format to make it more appea
 
 Example 2: "Consider that my height is 5'5", female, what recommendations would you make for an ideal weight and what vegan foods can I eat to achieve this goal?"
 
+### Deployment
+
+To build a deployment for hosting on a web server, use the following steps.
+
+1. In Visual Studio Code, run the **Publish** build step. This performs the following steps automatically:
+    ```
+    cd ClientApp
+    npm run build
+    cd ..
+    dotnet publish -c Release -o ./publish
+    ```
+2. Copy the database files `*.sqlite` into `/publish`.
+3. Copy the `.env` file into `/publish` and add your API key for Cohere.
+4. Run the executable `/pubish/weight_tracker.exe`
+
+The web application will begin running on port 5000. The executable is a self-contained web server, similar to a node.js application, and may be deployed to a Windows web server or Microsoft Azure.
+
 ## Tech Stack
 
 - Visual Studio Code
